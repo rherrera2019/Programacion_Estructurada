@@ -2,13 +2,15 @@
 #include <stdlib.h>
 
 /*
-53.E.P que lea un vector de n elementos y que determine el elemento mayor del arreglo y su posicion
-Elaboró: Los compiladores
-Ciclo utilizado: do-while
-Fecha:9/Marzo/2019
-versión 1.0
+54.E.P que lea dos vectores de n elementos y que genere e imprima un 
+tercer vector con la suma de cada uno de los elementos de los dos anteriores.
+Elaboró:Los Compiladores
+Ciclo utilizado: for
+fecha:9/Marzo/2019
+Versión 1.0
 
 */
+
 int main() {
 	//VARIABLES
 	float m,validacion,valor;//variables usadas para la lectura del número de elementos a leer y para verificar que la validacion del valor ingresado no sea de tipo flotante.
@@ -31,6 +33,8 @@ int main() {
 	}
 	
 	//Validacion de datos, se comprueba que el el numero de los elementos a leer sea de tipo entero y positivo
+	int v=0;
+	
 	
 	if(band1==0 || band2==0){//de esta manera restringimos que no entre al ciclo do-while la primera vez por default
 		do{//si alguna de las dos banderas vale 0, se pedira ingresar los valores nuevamente
@@ -56,37 +60,44 @@ int main() {
 	system("cls");//se limpia la pantalla
 	
 	//variables usadas para la lectura de los datos,determinar el mayor de los elementos y su posición del mayor
-	float elementos[n];
-	float elemento_mayor;
-	elemento_mayor=0;
-	int contador,posicion;
-	posicion=0;
-	contador=1;
+	float vector_1[n];
+	float vector_2[n];
+	float vector_3[n];
+	float sum_vectores_1_2;
+	sum_vectores_1_2=0;
 	//
 	
 	//PROCESO
-	do{
-		printf("\n Elemento %d",contador);
-		printf("\n Ingrese el valor: ");
-		scanf("%f",&elementos[contador]);
+	int i=0;
+	for(i=1;i<=n;i++){
+
+		printf("\n Elemento %d",i);
+		printf("\n Vector 1: ");
+		scanf("%f",&vector_1[i]);
+		printf("\n Vector 2: ");
+		scanf("%f",&vector_2[i]);
 		
-		if(contador==1){//se asume que el primer elemento es el mayor sin importar si es positivo o negativo
-			elemento_mayor=elementos[contador];
-				posicion=contador;
-		}
-		
-		if(elementos[contador]>elemento_mayor){
-			elemento_mayor=elementos[contador];
-			posicion=contador;
-		}
+		sum_vectores_1_2=vector_1[i]+vector_2[i];
+		vector_3[i]=sum_vectores_1_2;
+		sum_vectores_1_2=0;
 		system("cls");
-		contador++;
-	}while(contador<=n);
+	}
+	
 	//SALIDA
-	printf("\n El elemento mayor ingresado es: %.2f",elemento_mayor);
-	printf("\n posicion: %d",posicion);
+	int s=0;
+	printf("\n Sumatorias de los elementos de los vectores 1 y 2");
+	printf("\n -----------------------");
+	printf("\n | posici%cn |   suma   |",162);
+	printf("\n -----------------------");
+	for(s=1;s<=n;s++){
+		
+		printf("\n    #%d        %.2f   ",s,vector_3[s]);
+	}
 	
 	return 0;
 }
-	
 
+/*Revisó:Picateclas
+-El programa funciona correctamente
+-La forma de imprimir las sumas es creativa y se ve bastante presentable
+- El programa es claro y está documentado*/

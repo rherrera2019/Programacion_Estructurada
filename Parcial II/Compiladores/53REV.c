@@ -2,10 +2,9 @@
 #include <stdlib.h>
 
 /*
-55.E.P que lea un vector de n elementos, el cual se sabe tiene un elemento negativo
- y que determine e imprima su posición.
+53.E.P que lea un vector de n elementos y que determine el elemento mayor del arreglo y su posicion
 Elaboró: Los compiladores
-Ciclo utilizado: for
+Ciclo utilizado: do-while
 Fecha:9/Marzo/2019
 versión 1.0
 
@@ -33,7 +32,8 @@ int main() {
 	
 	//Validacion de datos, se comprueba que el el numero de los elementos a leer sea de tipo entero y positivo
 	
-		while(band2==0 || band1==0){//si alguna de las dos banderas vale 0, se pedira ingresar los valores nuevamente
+	if(band1==0 || band2==0){//de esta manera restringimos que no entre al ciclo do-while la primera vez por default
+		do{//si alguna de las dos banderas vale 0, se pedira ingresar los valores nuevamente
 			printf("\n ***El valor ingresado no es valido***");
 			printf("\n Ingrese solo valores enteros positivos");
 			printf("\n ingrese el n%cmero de elementos que desea ingresar: ",163);
@@ -49,37 +49,46 @@ int main() {
 			if(m>0){
 				band1=1;
 			}else band1=0;
-		}
-	
+		}while(band2==0 || band1==0);
+	}
 	x=(int)m;//convertimos el valor ingresado para el tamaño del arreglo en entero
 	n=x;
 	system("cls");//se limpia la pantalla
 	
 	//variables usadas para la lectura de los datos,determinar el mayor de los elementos y su posición del mayor
 	float elementos[n];
-	float elemento_negativo;
-	elemento_negativo=0;
-	int posicion;
+	float elemento_mayor;
+	elemento_mayor=0;
+	int contador,posicion;
 	posicion=0;
+	contador=1;
 	//
 	
 	//PROCESO
-	int i=0;
-	for(i=1;i<=n;i++){
-		printf("\n Elemento %d",i);
+	do{
+		printf("\n Elemento %d",contador);
 		printf("\n Ingrese el valor: ");
-		scanf("%f",&elementos[i]);
-
-		if(elementos[i]<0){//identificamos el elemento negativo, el cual se guarda en la variable de elemento_negativo y se guarda la posicion
-			elemento_negativo=elementos[i];
-			posicion=i;
+		scanf("%f",&elementos[contador]);
+		
+		if(contador==1){//se asume que el primer elemento es el mayor sin importar si es positivo o negativo
+			elemento_mayor=elementos[contador];
+				posicion=contador;
+		}
+		
+		if(elementos[contador]>elemento_mayor){
+			elemento_mayor=elementos[contador];
+			posicion=contador;
 		}
 		system("cls");
-		
-	}
+		contador++;
+	}while(contador<=n);
 	//SALIDA
-	printf("\n El elemento negativo ingresado es: %.2f",elemento_negativo);
+	printf("\n El elemento mayor ingresado es: %.2f",elemento_mayor);
 	printf("\n posicion: %d",posicion);
 	
 	return 0;
 }
+	
+/*El programa no funciona correctamente al 100%, ya que si el número mayor se repite,
+  éste sólo imprime la primera posición que encuentra y no las demás en las que se encuentra esos números mayores.
+  Por otro lado, limpia la pantalla que es buen detalle y valida que no sea negativos o flotantes la cantidad  ingresar.*/

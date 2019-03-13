@@ -77,3 +77,5 @@ int main() {
 	
 	return 0;
 }
+/*El programa funciona correctamente, valida que no sea negativos, también valida los valores flotantes.
+  No limpia pantalla para no tener todo el proceso en la pantalla. Creo que la variables podrían haber sido más representativas.*/

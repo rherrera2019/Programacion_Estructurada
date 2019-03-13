@@ -40,4 +40,7 @@ int main() {
 	
 	return 0;
 }
-
+/*Revisado por: Equipo Picateclas
+Observaciones: He ingresado los valores, los imprime correctamente, olvidó cambiar n a 50, necesita mas documentación
+Estatus: Issues
+*/

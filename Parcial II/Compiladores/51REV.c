@@ -74,4 +74,7 @@ int main() {
 	
 	return 0;
 }
-
+/*Revisado por: Equipo Picateclas
+Observaciones: He ingresado el tamaño del vector y sus elementos, funciona correctamente
+Estatus: Working
+*/
