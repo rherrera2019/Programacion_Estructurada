@@ -10,6 +10,7 @@ int main() {
 	
 	float distancia_puntos;
 
+	printf("\nInserte las coordenadas del PRIMER punto\nX= ");
 	scanf("%i", &x1);
 	
 	printf("\n\nInserte las coordenadas del PRIMER punto\nY= ");
