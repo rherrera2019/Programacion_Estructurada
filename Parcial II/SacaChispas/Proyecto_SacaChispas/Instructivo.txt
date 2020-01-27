@@ -1,0 +1,45 @@
+	-->3 en raya o gato<--
+
+El primer jugador en formar una fila, columna o diagonal gana.
+
+
+
+
+
+	-->Cuadrado magico<--
+
+Selecciona una dificultad y completa el cuadrado con los datos 
+suministrados por el sistema.
+
+
+
+
+
+	-->Battleship<--
+
+Destruye los barcos del enemigo antes de que te destruya los tuyos.
+
+
+
+
+v 1.0
+Presione cualquier tecla...
+X
+
+
+
+
+
+
+
+
+
+
+
+
+Un pequeño Easter Egg (03)
+
+- La paradoja del cumpleaños establece que si hay 23 personas reunidas hay una probablidad del 50,7% de que 
+al menos dos personas de ellas cumplan años el mismo día. (No sé si lo sabías pero igual lo pongo xD).
+
+El contenido creado para este proyecto es 0% original de Javier©.
