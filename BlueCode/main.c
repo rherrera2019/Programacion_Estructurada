@@ -2,7 +2,7 @@
 #include <stdlib.h>
   /*
     En un supermercado, se realizan descuentos por la compras a partir de unas bolitas de colores:
-    verde 20%, amarilla 25%, negra 30%; la blanca no aplica ningún descuento. E.P. que lea el importe
+    verde 20%, amarilla 25%, negra 30%; la blanca no aplica ningÃºn descuento. E.P. que lea el importe
     de la compra y el color de la bolita, determine e imprima cuanto debe pagar un cliente.
     */
 
@@ -36,4 +36,10 @@ int main()
 
     }
     return 0;
+  
 }
+
+/*
+QA
+
+*/
