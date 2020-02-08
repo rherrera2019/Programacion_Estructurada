@@ -3,7 +3,7 @@
 	Copyright: BlueCode
 	Author: Guillermo Canto
 	Date: 06/02/20 21:11
-	Description: Lee 100 numeros y los imprime 
+	Description: Lee  10  números  y  que  determina  e  imprime los  que sean mayores a 100. 
 */
 
 #include <stdio.h>
