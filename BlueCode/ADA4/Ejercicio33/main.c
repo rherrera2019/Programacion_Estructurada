@@ -1,13 +1,13 @@
+/*
+	Name: Ejercicio 33
+	Copyright: BlueCode
+	Author: Guillermo Canto
+	Date: 06/02/20 21:11
+	Description: Lee 100 numeros y los imprime 
+*/
+
 #include <stdio.h>
 #include <stdlib.h> 
-
-/*
-Nombre del Programa: Mayores a 100
-Descripción: E.P. que  lea  10  números  (N)  y  que  determine  e  imprima  los  que sean mayores a 100.
-Autor: Guillermo Canto
-Versión: 1.0
-Fecha: 06/02/2020
-*/
 
 int main(int argc, char *argv[]) {
 	
@@ -16,10 +16,14 @@ int main(int argc, char *argv[]) {
 	
 	while(i<10){
 		
+		//Entrada
 		printf("Ingrese un numero: ");
 		scanf("%f", &entrada);
 		
+		//Proceso
 		if(entrada > 100){
+			
+			//Salida
 			printf("%.2f es mayor a 100\n", entrada);
 		}
 		
