@@ -1,3 +1,5 @@
+//HECHO POR VICTOR ENRIQUE CAUICH DAVALOS
+#include <stdio.h>
 #include <locale.h>//Esta librería es para poner acentos y Ñ
 int main()
 {
