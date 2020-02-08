@@ -3,7 +3,7 @@
 	Copyright: BlueCode
 	Author: Guillermo Canto
 	Date: 08/02/20 12:29
-	Description: E.P.  que  lea  el  nombre,  el  sueldo  y  el  n˙mero  de  hijos  de  los  20 empleados de la tlapalerÌa ìEl Sapo Verdeî, y que determine e imprima
+	Description: E.P.  que  lea  el  nombre,  el  sueldo  y  el  n√∫mero  de  hijos  de  los  20 empleados de la tlapaler√≠a ‚ÄúEl Sapo Verde‚Äù, y que determine e imprima
 	el  nombre  de  los  empleados  con  salario  mayor  a  $  1,000.-y  quetengan entre 3 y 7 hijos.
 */
 
@@ -20,11 +20,11 @@ int main(int argc, char *argv[]) {
 	char nombre[MAX];
 	float sueldo;
 	int numHijos;
-	int tienenEntreTresYSiete = 0;
 	int i = 0;
 	
 	while(i<20){
 		
+		//Entrada
 		printf("Ingrese su nombre:");
 		scanf("%s", &nombre);
 		
@@ -34,8 +34,11 @@ int main(int argc, char *argv[]) {
 		printf("Ingrese el numero de hijos:");
 		numHijos = leerNumHijos();
 		
+		//Proceso
 		if(sueldo>1000){
 			if(numHijos >= 3 && numHijos <= 7){
+				
+				//Salida
 				printf("%s tiene mas de $1000 de sueldo y tiene entre 3 y 7 hijos.", nombre);
 			}
 		}
