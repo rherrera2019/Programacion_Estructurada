@@ -27,9 +27,9 @@ int main (){
         printf("Nombre de la Surcursal #%d:\n", contadorTiendas);
         scanf("%s", &nombreSurcursal);//Leer nombre de la surcursal
         fflush(stdin);//Clear Buffer
-        for(int contadorYears = 1; contadorYears<=3; contadorYears++){//Ciclo por años
+        for(int contadorYears = 1; contadorYears<=5; contadorYears++){//Ciclo por años
             float utilidadesDe1Year = 0;//Variable para guarda la utilidad de un año
-            for(int contadorMeses = 1; contadorMeses<=2; contadorMeses++){//Ciclo por meses
+            for(int contadorMeses = 1; contadorMeses<=12; contadorMeses++){//Ciclo por meses
                 float ventas, costos, utilidadesDelMes = 0;// Declaro variables para ventas, costos, utilidades
                 printf("Ventas del Surcusal %s para el año %d del mes %d:\n", nombreSurcursal, contadorYears, contadorMeses);
                 scanf("%f", &ventas);//Leer ventas
