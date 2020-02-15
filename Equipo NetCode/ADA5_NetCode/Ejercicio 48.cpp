@@ -9,7 +9,7 @@ Version: 2.0
 Fecha: 12/02/2020
 */
 
-#define Alumnos 13 //Definimos cuántos alumnos votarán
+#define Alumnos 500 //Definimos cuántos alumnos votarán
 
 int main (){
 	setlocale(LC_ALL,"");//Se aplica la función de la biblioteca locale para que se puedan imprimir acentuaciones...
