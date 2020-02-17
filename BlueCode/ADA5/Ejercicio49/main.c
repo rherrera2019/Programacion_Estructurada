@@ -29,6 +29,7 @@ int main(int argc, char *argv[]) {
 	bool pagoCredito;
 	float totalVentas = 0;
 	float totalComisiones = 0;
+	float totalCliente;
 	int numClientes, numHamburguesas, i;
 	char entrada;
 	
@@ -40,12 +41,14 @@ int main(int argc, char *argv[]) {
 	for (i= 0; i<numClientes; i++){
 		
 		pagoCredito = false;
+		totalCliente = 0;
 		
 		//Revisa si el usuario va a usar pago con tarjeta
 		printf("Pago con tarjeta de credito? (y/n): ");
 		scanf("%c", &entrada);
 		entrada = validarChar(entrada);
 		if(entrada == 'y'){
+			printf("Ha escogido pagar con tarjeta de credito\n");
 			pagoCredito = true;
 		}
 		
@@ -55,18 +58,18 @@ int main(int argc, char *argv[]) {
 		numHamburguesas = validarNumHamburgesas(numHamburguesas);
 		
 		//Agrega al total de ventas las hamburguesas sencillas que se vendieron.
-		totalVentas += numHamburguesas *COSTOSENCILLA;
+		totalCliente += numHamburguesas *COSTOSENCILLA;
 		
 		//El proceso se repite para las hamburguesas dobles y triples
 		printf("Ingrese cuantas hamburguesas dobles desea: ");
 		scanf("%d", &numHamburguesas);
 		numHamburguesas = validarNumHamburgesas(numHamburguesas);
-		totalVentas += numHamburguesas * COSTODOBLE;
+		totalCliente += numHamburguesas * COSTODOBLE;
 		
 		printf("Ingrese cuantas hamburguesas triples desea: ");
 		scanf("%d", &numHamburguesas);
 		numHamburguesas = validarNumHamburgesas(numHamburguesas);
-		totalVentas += numHamburguesas * COSTOTRIPLE;
+		totalCliente += numHamburguesas * COSTOTRIPLE;
 		
 		//Si se uso tarjeta se agrega el 3% al total de comisiones
 		if(pagoCredito){
@@ -106,7 +109,7 @@ int validarNumClientes(int entrada){
 */
 char validarChar(char entrada){
 	char entradaValidada;
-	while(entrada!= 'y' && entrada!='n'){
+	while(entrada!= 'y' && entrada!= 'n'){
 		printf("Entrada invalida, intenta de nuevo: ");
 		scanf("%c", &entrada);
 	}
