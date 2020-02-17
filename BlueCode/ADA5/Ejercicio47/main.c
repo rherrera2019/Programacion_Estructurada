@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <locale.h>
 
-#define NUMALUMNOS 5
+#define NUMALUMNOS 50
 
 float validarCalificacion(float c);
 
@@ -24,7 +24,10 @@ int main(int argc, char *argv[]) {
 	
 	setlocale(LC_ALL,"");
 	
+	//Proceso
 	for(i = 0; i < NUMALUMNOS; i++){
+		
+		//Entrada
 		printf("Alumno %d, ingrese su calificación: ", i+1);
 		scanf("%f", &entrada);
 		calificaciones[i] = validarCalificacion(entrada);
@@ -39,11 +42,14 @@ int main(int argc, char *argv[]) {
 		}
 	}
 	
-	printf("El numero de alumnos mayores al promedio, que es de %.2f es: %d", promedio, alumnosMayoresAlPromedio);
+	//Salida
+	printf("El numero de alumnos mayores al promedio, que es de %.2f es: %d\n", promedio, alumnosMayoresAlPromedio);
+	system("pause");
 	
 	return 0;
 }
 
+//Funciones
 float validarCalificacion(float c){
 	float calificacionValidada;
 	if(c<0||c>100){
