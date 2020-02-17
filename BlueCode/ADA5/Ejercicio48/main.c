@@ -52,6 +52,7 @@ int main(int argc, char *argv[]) {
 
 char validarEntrada(char entrada){
 	while(entrada != '0' && entrada != '1' && entrada != '2'){
+		fflush(stdin);
 		printf("Entrada invalida, intenta de nuevo: ");
 		scanf("%c", &entrada);
 	}
