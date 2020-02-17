@@ -23,6 +23,7 @@
 int validarNumClientes(int var);
 char validarChar(char entrada);
 int validarNumHamburgesas(int numHamburguesas);
+void flushInputBuffer();
 
 //Main
 int main(int argc, char *argv[]) {
@@ -42,7 +43,9 @@ int main(int argc, char *argv[]) {
 		
 		pagoCredito = false;
 		totalCliente = 0;
+		flushInputBuffer();
 		
+		printf("Cliente %d\n", i+1);
 		//Revisa si el usuario va a usar pago con tarjeta
 		printf("Pago con tarjeta de credito? (y/n): ");
 		scanf("%c", &entrada);
@@ -71,15 +74,20 @@ int main(int argc, char *argv[]) {
 		numHamburguesas = validarNumHamburgesas(numHamburguesas);
 		totalCliente += numHamburguesas * COSTOTRIPLE;
 		
+		totalVentas += totalCliente;
+		
+		printf("Total cliente %d: $%.2f\n", i+1, totalCliente);
+		
 		//Si se uso tarjeta se agrega el 3% al total de comisiones
 		if(pagoCredito){
-			totalComisiones += totalVentas * 0.03;
+			totalComisiones += totalCliente * 0.03;
 		}
 		
-	
 	}
 	
-	printf("El total de ventas fue: %.2f\n El total de comisiones fue: %.2f", totalVentas, totalComisiones);
+	//Salida
+	printf("El total de ventas fue: $%.2f\nEl total de comisiones fue: $%.2f\n", totalVentas, totalComisiones);
+	system("PAUSE");
 	
 	return 0;
 }
@@ -110,6 +118,7 @@ int validarNumClientes(int entrada){
 char validarChar(char entrada){
 	char entradaValidada;
 	while(entrada!= 'y' && entrada!= 'n'){
+		flushInputBuffer();
 		printf("Entrada invalida, intenta de nuevo: ");
 		scanf("%c", &entrada);
 	}
@@ -128,5 +137,9 @@ int validarNumHamburgesas(int entrada){
 	}
 	entradaValidada = entrada;
 	return entradaValidada;
+}
+
+void flushInputBuffer(){
+	fflush(stdin);
 }
 
