@@ -1,0 +1,16 @@
+       LA MARQUESITERÍA       
+       TICKET #18             
+------------------------------
+Atendió: Victor Enrique Cauich Davalos
+Fecha: 5/5/2020
+Hora: 23:49:29
+------------------------------
+Productos:     Cant:   Precio:
+------------------------------
+Tostiesquites  2         70.00
+------------------------------
+Toppings       5         30.00
+------------------------------
+Refrescos      2         50.00
+------------------------------
+              TOTAL:   $150.00

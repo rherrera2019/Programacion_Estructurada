@@ -1,0 +1,20 @@
+Al ejectuar el programa le deberá salir un LOGIN, esto para validar a cada usuario. Los trabajadores guardados son: 
+
+      USUARIOS       |     CONTRASEÑAS    | ¿ES ADMINISTRADOR?    |
+   VictorWars2000    |       281015       |         SI            |
+     EmilioRejon     |    12345678910     |         SI            |
+      JuanPerez      |       123456       |         NO            |
+
+
+Alguna de estos usuarios con sus respectivas contraseñas debe usar, sino no le dejará entrar, ya luego, dependiendo
+de que si el usuario con el que accedió es administrador o un simple trabajador le desplegará un menú, la cual no 
+es igual para un administrador que para un trabajador, y ya luego dependiendo del menú puede ya probar el programa.
+
+<<CABE RECALCAR QUE LA INFORMACIÓN DE USUARIOS EN ESTE .TXT PUEDEN CAMBIAR POR EL PROGRAMA EN SI, YA QUE EL PROGRAMA
+PERMITE AGREGAR Y ELIMINAR USUARIOS Y SI SE REALIZAN CAMBIOS EN EL PROGRAMA, AQUÍ NO SE VERÁ REFLEJADO, PARA QUE VEA
+LOS USUARIOS ACTUALES, PUEDE ENTRAR A LA CARPETA "Datos", Y ACCEDER AL .txt LOGIN, AHÍ ESTARÁN LOS DATOS DE LOS 
+USUARIOS ACTUALIZADOS>>
+
+Por otro lado, en el pdf que se llama "Avances_Netcode.pdf" ese es el reporte que se solicitó.
+
+Que tenga buen día...

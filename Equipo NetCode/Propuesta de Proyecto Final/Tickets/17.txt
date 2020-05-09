@@ -1,0 +1,16 @@
+       LA MARQUESITERÍA       
+       TICKET #17             
+------------------------------
+Atendió: Victor Enrique Cauich Davalos
+Fecha: 5/5/2020
+Hora: 18:34:53
+------------------------------
+Productos:     Cant:   Precio:
+------------------------------
+Marquesitas    2         70.00
+------------------------------
+Ingredientes   3         18.00
+------------------------------
+Aguas          3         45.00
+------------------------------
+              TOTAL:   $133.00

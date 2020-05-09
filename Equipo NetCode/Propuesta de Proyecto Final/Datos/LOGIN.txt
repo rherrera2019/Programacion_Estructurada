@@ -1,0 +1,6 @@
+USUARIO/CONTRASEÑAS/ADMINISTRADOR O TRABAJADOR/NOMBRE(S)/APELLIDOS
+VictorEnrique,17042000,1,Victor Enrique,Cauich Davalos,
+EmilioRejon,12345678910,1,Emilio,Rejón,
+JuanPerez,123456,0,Juan,Perez Uc,
+Rossmarth28,28081999,0,Rossmarth Celina,Mercedes Marrero,
+Celina,Comili17,1,Celina,Mercedes Canché,

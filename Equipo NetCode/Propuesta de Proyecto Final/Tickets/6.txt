@@ -1,0 +1,12 @@
+       LA MARQUESITERÍA       
+       TICKET #6              
+------------------------------
+Atendió: VictorWars2000
+Fecha: 25/4/2020
+Hora: 12:05:46
+------------------------------
+Productos:     Cant:   Precio:
+------------------------------
+Tostiesquites  2          0.00
+------------------------------
+             TOTAL:$      0.00
