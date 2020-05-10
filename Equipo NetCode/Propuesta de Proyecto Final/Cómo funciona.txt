@@ -1,10 +1,16 @@
+                                          PROGRAMACIÓN ESTRUCTURADA
+POR: 
+- Víctor Cauich Davalos 
+- Alan Josue Barón Pat 
+
 Al ejectuar el programa le deberá salir un LOGIN, esto para validar a cada usuario. Los trabajadores guardados son: 
 
-      USUARIOS       |     CONTRASEÑAS    | ¿ES ADMINISTRADOR?    |
-   VictorWars2000    |       281015       |         SI            |
-     EmilioRejon     |    12345678910     |         SI            |
-      JuanPerez      |       123456       |         NO            |
-
+      USUARIOS       |     CONTRASEÑAS    | ¿ES ADMINISTRADOR?    |     NOMBRE(S)     |    APELLIDO(S)    |
+    VictorEnrique    |      17042000      |          1            |  Victor Enrique   |   Cauich Davalos  |
+     EmilioRejon     |     12345678910    |          1            |       Emilio      |       Rejón       |
+      JuanPerez      |        123456      |          0            |        Juan       |      Perez Uc     |
+     Rossmarth28     |       28081999     |          0            |  Rossmarth Celina |  Mercedes Marrero |
+       Celina        |       Comili17     |          1            |       Celina      |  Mercedes Canché  |
 
 Alguna de estos usuarios con sus respectivas contraseñas debe usar, sino no le dejará entrar, ya luego, dependiendo
 de que si el usuario con el que accedió es administrador o un simple trabajador le desplegará un menú, la cual no 
