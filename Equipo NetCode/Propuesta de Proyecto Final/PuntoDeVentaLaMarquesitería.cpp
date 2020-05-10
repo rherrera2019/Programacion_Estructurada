@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <stdio.h> //FUNCIÓN PARA ENTRADAS Y SALIDAS
 #include <locale.h> //Para las acentuaciones
 #include <stdlib.h> //Conversión de tipos de datos
 #include <string.h> // permite strcmp y strcpy.
@@ -12,8 +12,10 @@ Version: 1.0
 Fecha: 20/04/2020
 */
 
+//PROTOTIPOS DE LAS FUNCIONES A USAR
 void ValidarUsuario();
 void Cambio(char Cadena[], int Tam);
+void Cambio2(char Cadena[], int Tam);
 void MenuAdministrador(char Nombres[20], char Apellidos[20]);
 void MenuTrabajador(char Nombres[20], char Apellidos[20]);
 void CrearVenta(char Nombres[20], char Apellidos[20]);
@@ -49,9 +51,11 @@ double ValidarPrecio();
 void AgregarTrabajador();
 void EliminarTrabajador();
 
+//----------------------------FUNCIÓN MAIN-------------------------
 int main (){
 	setlocale(LC_ALL,"");//Se aplica la función de la biblioteca locale para que se puedan imprimir acentuaciones...
 	
+	//SOLO LLAMAMOS A LA FUNCIÓN PARA QUE EL USUARIO PUEDA INTENTAR ACCEDER
 	ValidarUsuario();
 	
 	system("cls");
@@ -65,18 +69,46 @@ int main (){
 //----------------Función para cambiar final de una Cadena---------
 void Cambio(char Cadena[], int Tam)
 {
+	//NOSOTROS USAMOS fgets para leer, y para no tener problemas, usamos esta 
+	//función para cambiar el \n del fgets a un \0.
 	for(int i = 0; i < Tam; i++)
 	{
-		if(Cadena[i] == '\n')
+		if(Cadena[i] == '\n')//Se recorre cada carácter del array hasta llegar al \n 
 		{
-			Cadena[i] = '\0';
+			Cadena[i] = '\0';//Aqu+i cambiamos el \n a \0
 		}
 	}
 }
-//-------------Validando usuario y contraseña---------------
+//----------------Función para cambiar final de una Cadena---------
+void Cambio2(char Cadena[])
+{
+	for(int i = 0; i < 10; i++)
+	{
+		if(Cadena[i] == ' ')
+		{
+			Cadena[i] = '\0';
+			i = 10;
+		}else
+		{
+			if(Cadena[i] == '\0')
+			{
+				i = 10;
+			}else
+			{
+				if(i+1 == 10)
+				{
+					Cadena[i] = '\0';
+				}
+			}
+		}
+	}
+}
+//--------------------Validando usuario y contraseña---------------
 void ValidarUsuario()
 {
-	system("cls");
+	system("cls");//Esta función nos sirve para borrar la consola en Windows
+	
+	//DECLARAMOS LAS VARIABLES QUE NOS VAN A SERVIR
 	FILE *LOGIN;
 	char *token;
 	char Usuario[16];
@@ -87,78 +119,95 @@ void ValidarUsuario()
 	int Val1;
 	char Aux[80];
 	int S;
+	
+	//IMPRIMIMOS EL LOGIN
 	printf("%15s", "LOGIN");
 	printf("\n\n%5s%s", "", "USUARIO: ");
-	fgets(Usuario, 16, stdin);
-	fflush(stdin);
-	Cambio(Usuario, 16);
+	fgets(Usuario, 16, stdin);//fgets va a tomar información por el consolador pero solo 16 carácteres
+	fflush(stdin);//Limpiamos el scaner del consolador
+	Cambio(Usuario, 16);//Llamamos a la función antes mencionada Cambio para cambiar el salto de linea que nos da fgets
 	printf("\n%2s%s", "", "CONTRASEÑA: ");
-	fgets(Contrasenia, 16, stdin);
-	fflush(stdin);
-	Cambio(Contrasenia, 16);
+	fgets(Contrasenia, 16, stdin);//fgets va a tomar información por el consolador pero solo 16 carácteres
+	fflush(stdin);//Limpiamos el scaner del consolador
+	Cambio(Contrasenia, 16);//Llamamos a la función antes mencionada Cambio para cambiar el salto de linea que nos da fgets
+	
+	//Se abre un archivo y se guarda en el apuntador FILE 
 	LOGIN = fopen("Datos/LOGIN.txt", "r");
-	if(LOGIN == NULL)
+	if(LOGIN == NULL)//SI NO LE DEVOLVIÓ NADA AL APUNTADOR ES DECIR, SI EL ARCHIVO NO EXITEN ENTRA A LAS SENTENCIAS
 	{
+		//SE IMPRIME QUE HUBO UN ERROR
 		system("cls");
 		printf("¡¡ERROR!!");
 		printf("\nEL ARCHIVO NO EXISTE...");
 		printf("\n\n\nTeclea ENTER para salir por favor...");
 		fflush(stdin);
 		getchar();
-		exit(-1);
+		exit(-1);//SE CIERRA EL PROGRAMA
 	}
-	rewind(LOGIN);
-	fgets(Aux, 80, LOGIN);
-	while(!feof(LOGIN) && Val == false)
+	
+	//SI ES QUE SI SE PUDO ABRIR CORRECTAMENTE EL ARCHIVO ENTONCES...
+	rewind(LOGIN);//Se sitúa el cursor de lectura/escritura al principio del archivo
+	fgets(Aux, 80, LOGIN);//Se ignora la primera fila del archivo 
+	while(!feof(LOGIN) && Val == false) //Mientras no se termine el archivo y no se encuentre los datos del usuario, no sale del while
 	{
-		fgets(Aux, 80, LOGIN);
-		token = strtok(Aux, ",");
-	    if(token != NULL){
-	    	if(strcmp(Usuario, token) == 0)
+		fgets(Aux, 80, LOGIN);//Se va tomando cada fila del archivo
+		token = strtok(Aux, ",");//Se realizan token con separación de ","
+		
+	    if(token != NULL){//Si a el token le devuelven nada o "NULL" no entra a las sentencias en el if
+	    
+	    	if(strcmp(Usuario, token) == 0)//Comparamos el primer dato del la linea con el usuario que se ingresó, si coincide entra en las sentencias de if
 	    	{
-	    		token = strtok(NULL, ",");
-	    		if(strcmp(Contrasenia, token) == 0)
+	    		token = strtok(NULL, ",");//Se toma el siente apartado de la fila 
+	    		
+	    		if(strcmp(Contrasenia, token) == 0)//Comparamos el segundo dato del la linea con la contraseña que se ingresó, si coincide entra en las sentencias de if
 	    		{
-	    			Val = true;
-	    			token = strtok(NULL, ",");
-	    			if(strcmp("1", token) == 0)
+	    			Val = true;//Se confirma que ya que encontró el usuario, para que ya no continue con el if
+	    			
+	    			token = strtok(NULL, ",");//Se toma el siguiente dato de la linea 
+	    			
+	    			if(strcmp("1", token) == 0)//Se verifica si es administrador o no
 	    			{
-	    				Val1 = 1;
+	    				Val1 = 1;//Si es administrador, se pobe que Val1 es igual a 1 para saber y nos sirva mas adelante
 					}else
 					{
-						Val1 = 0;
+						Val1 = 0;//Si NO es administrador, se pobe que Val1 es igual a 0 para saber y nos sirva mas adelante
 					}
-					token = strtok(NULL, ",");
-					strcpy(Nombres, token);
-					token = strtok(NULL, ",");
-					strcpy(Apellidos, token);
+					
+					token = strtok(NULL, ",");//Se toma el siguiente valor de la linea que son los Nombres del usuario
+					strcpy(Nombres, token);//Se agregan al Array Nombres
+					token = strtok(NULL, ",");//Se toma el siguiente valor de la linea que son sus Apellidos del usuario
+					strcpy(Apellidos, token);//Se agregan al Array Apellidos
 				}
 			}	
 	    }
 	}
-	fclose(LOGIN);
-	if(Val == true)
+	
+	
+	fclose(LOGIN);//SE CIERRA EK ARCHIVO PARA NO PERDER DATOS O QUE SUCEDA ALGÚN ERROR
+	
+	if(Val == true)//Se verifica que se hayan encontrados los datos del usuario que intenta acceder, si Val es true significa que si se encontró, así que si es así, entra en las sentecias del if
 	{
-		printf("CORRECTO");
-		if(Val1 == 1)
+		
+		if(Val1 == 1)//Aquí se verifica si el usuario que accedió es Administrador, por eso si Val1 es 1 entonces entra a la senetncia del if
 		{
-			MenuAdministrador(Nombres, Apellidos);
-		}else
+			MenuAdministrador(Nombres, Apellidos);//Se manda al usuario al menú de un administrador, llamando a la función MenuAdministrador
+		}else//Sino es administrador, entonces entra a la siguiente sentencia
 		{
-			MenuTrabajador(Nombres, Apellidos);
+			MenuTrabajador(Nombres, Apellidos);//Se manda al usuario al menú de un Trabajador, llamando a la función MenuTrabajador
 		}
 		
-	}else
+	}else//Si no se encontró la información de usuario y contraseña se entra a las siguientes sentencias
 	{
 		do
-		{
-			system("cls");
+		{ //Todas las siguientes sentencias se ejecutaran mientras se realiza una pregunta y no se ingrese alguna de las dos opciones aceptables
+			system("cls");//Se limpia la pantalla de la consola
 			printf("USUARIO O CONTRASEÑA INCORRECTAS, ¿DESEA SEGUIR INTENTANDO?");
 			printf("\n1. SI.");
 			printf("\n2. NO.");
 			printf("\nIngrese el número de la selección que quiera elegir: ");
 			scanf("%d", &S);
-			if(S != 1 && S != 2)
+			fflush(stdin);
+			if(S != 1 && S != 2)//Si no se selecciona ninguna de las dos opciones manda el siguienmte mensaje
 			{
 				printf("\n\nERROR, INGRESE UNA OPCIÓN DADA...");
 				printf("\n\n\nTeclea ENTER para continuar, por favor...");
@@ -167,19 +216,20 @@ void ValidarUsuario()
 			}
 		}while(S != 1 && S != 2);
 		
-		if(S == 1)
+		if(S == 1)//Si se quiere seguir intentando para acceder al sistema se leen las siguientes sentencias
 		{
 			fflush(stdin);
-			ValidarUsuario();
+			ValidarUsuario();//Se va llamando a la misma función hasta que se encuentre algún usuario o ya no se quiera seguir intentando
 		}
 	}
 }
-//--------------Menú del Trabajador----------------------------
+//-------------------------Menú del Trabajador---------------------
 void MenuTrabajador(char Nombres[21], char Apellidos[21])
 {
 	int Seleccion;
-	do
+	do//Se ejecuta el menú hasta que ya se quiera salir del sistema
 	{
+		//Se imprime el menú de un Trabajador
 		system("cls");
 		printf("%15s%-15s", "BIENVENIDO: ", Nombres);
 		printf("\n%15s%-15s", "MENÚ DE T", "RABAJADOR");
@@ -188,8 +238,10 @@ void MenuTrabajador(char Nombres[21], char Apellidos[21])
 		printf("\n3. Ver Ganancias.");
 		printf("\n4. SALIR.");
 		printf("\nIngrese el número de la opción \nque desee realizar, por favor: ");
-		scanf("%d", &Seleccion);
+		scanf("%d", &Seleccion);//Se lee la opción
 		fflush(stdin);
+		
+		//Conforme se realiza la selección se va llamando a la función que realice la selección
 		switch(Seleccion)
 		{
 			case 1:
@@ -221,12 +273,13 @@ void MenuTrabajador(char Nombres[21], char Apellidos[21])
 		}
 	}while(Seleccion != 4);
 }
-//--------------Menú del Administrador----------------------------
+//-----------------------Menú del Administrador--------------------
 void MenuAdministrador(char Nombres[21], char Apellidos[21])
 {
 	int Seleccion;
-	do
+	do//Se ejecuta el menú hasta que ya se quiera salir del sistema
 	{
+		//Se imprime el menú de un Trabajador
 		system("cls");
 		printf("%15s%-15s", "BIENVENIDO: ", Nombres);
 		printf("\n%15s%-15s", "MENÚ DE AD", "MINISTRADOR");
@@ -238,8 +291,10 @@ void MenuAdministrador(char Nombres[21], char Apellidos[21])
 		printf("\n6. Eliminar Trabajador.");
 		printf("\n7. SALIR.");
 		printf("\nIngrese el número de la opción \nque desee realizar, por favor: ");
-		scanf("%d", &Seleccion);
+		scanf("%d", &Seleccion);//Se lee la opción
 		fflush(stdin);
+		
+		//Conforme se realiza la selección se va llamando a la función que realice la selección
 		switch(Seleccion)
 		{
 			case 1:
@@ -280,13 +335,15 @@ void MenuAdministrador(char Nombres[21], char Apellidos[21])
 		}
 	}while(Seleccion != 7);
 }
-//------------------Función para crear una venta---------
+//---------------------Función para crear una venta----------------
 void CrearVenta(char Nombres[21], char Apellidos[21])
 {
+	//SE INICIALIZAN LAS VARIABLES DE LAS CANTIDADESS DE CADA INGREDIENTE
 	int CantMarquesitas = 0, CantIngredientes = 0, CantEsquites = 0, CantToppings = 0, CantTostiesquites = 0;
 	int CantRefrescos = 0, CantAguas = 0, Seleccion = 0;
 	bool Val = false;
-	do
+	
+	do//SE EJECUTA EL MENÚ MIENTRAS QUE NO SE DIGA QUE YA ESTÁ LISTO EL PEDIDO O SI SE QUIERE CANCELAR
 	{
 		fflush(stdin);
 		system("cls");
@@ -304,8 +361,9 @@ void CrearVenta(char Nombres[21], char Apellidos[21])
 		scanf("%d", &Seleccion);
 		fflush(stdin);
 		system("cls");
-		switch(Seleccion)
+		switch(Seleccion)//dDeependiendo de la seleccion que se realice se llama a la función correspondiente para agregar la cantidad de producto
 		{
+			/*En el caso de agregar marquesitas e ingredientes, no se podrán agregar ingredientes si no se tiene agregado al menos 1 marquesita, se valida*/
 			case 1:
 				CantMarquesitas = IngresarMarquesitas();
 				if(CantMarquesitas == 0)
@@ -341,6 +399,7 @@ void CrearVenta(char Nombres[21], char Apellidos[21])
 				CantAguas = IngresarAguas();
 				break;
 			case 8:
+				//Se valida que se tenga agregado al menos 1 producto
 				if(CantMarquesitas == 0)
 				{
 					if(CantEsquites == 0)
@@ -378,13 +437,19 @@ void CrearVenta(char Nombres[21], char Apellidos[21])
 		}
 	}while(Seleccion != 8 && Seleccion != 9);
 	
+	
 	if(Seleccion != 9)
 	{
+		//SE INICIALIZAN LAS VARIABLES QUE NOS SIRVEN
 		int NumTicket;
 		char Aux[15];
 		FILE *Ultimo;
+		char *token;
+		
+		//SE ABRE EL ARCHIVO QUE SE SOLITA PARA SABER CUÁL ES EL ULTIMO TICKET
 		Ultimo = fopen("Tickets/UltimoNoTicket.txt", "r");
-		if(Ultimo == NULL)
+		
+		if(Ultimo == NULL)//SI SUCEDE ALGÚN ERROR SE CIERRA EL PROGRAMA
 		{
 			system("cls");
 			printf("¡¡ERROR!!");
@@ -394,11 +459,14 @@ void CrearVenta(char Nombres[21], char Apellidos[21])
 			getchar();
 			exit(-1);
 		}
+		
 		rewind(Ultimo);
 		fgets(Aux, 15, Ultimo);
 		fclose(Ultimo);
 		
 		NumTicket = atoi(Aux) + 1;
+		
+		//YA QUE SE TOMÓ EL NÚMERO DEL ULTIMO TICKET SE SOBREESCRIBE PONIENDO CUÁL ES EL NUEVO ULTIMO NÚMERO DE TICKET
 		Ultimo = fopen("Tickets/UltimoNoTicket.txt", "w");
 		if(Ultimo == NULL)
 		{
@@ -411,8 +479,9 @@ void CrearVenta(char Nombres[21], char Apellidos[21])
 			exit(-1);
 		}
 		fprintf(Ultimo, "%d", NumTicket);
-		fclose(Ultimo);
+		fclose(Ultimo);//SE CIERRA EL ARCHIVO PARA QUE SE GUARDE TODO
 		
+		//SE INICIALIZAN NUEVAS VARIABLES QUE NOS SERVIRAN
 		char TOTALF[10];
 		char NombreTicket[25];
 		char NombreTicket2[35] = "Tickets/";
@@ -421,6 +490,8 @@ void CrearVenta(char Nombres[21], char Apellidos[21])
 		strcat(NombreTicket2, NombreTicket);
 		
 		FILE *NewTicket;
+		
+		//SE CREA UN NUEVO ARCHIVO DEL NUEVO TICKET
 		NewTicket = fopen(NombreTicket2, "w");
 		if(NewTicket == NULL)
 		{
@@ -432,14 +503,24 @@ void CrearVenta(char Nombres[21], char Apellidos[21])
 			getchar();
 			exit(-1);
 		}
+		
+		//USAMOS LOS VALORES DE LA HORA Y FECHA DEL MOMENTO EN EL QUE SE ESTÁ CREANDO EL NUEVO TICKET PARA LUEGO AGREGARLO AL ARCHIVO .TXT
 		time_t FechaActual;
 		time(&FechaActual);
 		struct tm *MiFecha = localtime(&FechaActual);
+		
+		//SE VA ESCRIBIENDO EN EL NUEVO TICKET
 		fprintf(NewTicket, "%15s%-15s", "LA MARQU", "ESITERÍA");
 		fprintf(NewTicket, "\n%15s%-15d", "TICKET #", NumTicket);
 		fprintf(NewTicket, "\n------------------------------");
+		
+		Cambio2(Nombres);
+		Cambio2(Apellidos);
+		
 		fprintf(NewTicket, "\nAtendió: %s %s", Nombres, Apellidos);
 		fprintf(NewTicket, "\nFecha: %d/%d/%d", MiFecha->tm_mday, MiFecha->tm_mon + 1, MiFecha->tm_year + 1900);
+		
+		//SE VALIDA PARA QUE SE ESCRIA BIEN LA HORA
 		if(MiFecha->tm_hour < 10)
 		{
 			if(MiFecha->tm_min < 10)
@@ -483,6 +564,8 @@ void CrearVenta(char Nombres[21], char Apellidos[21])
 				}
 			}
 		}
+		
+		//SE AGREGAN A CONTINUACIÓN LOS DATOS DE LOS PRODUCTOS QUE SOLICITA EL CLIENTE
 		fprintf(NewTicket, "\n------------------------------");
 		fprintf(NewTicket, "\n%-15s%-5s%10s", "Productos:", "Cant:", "Precio:");
 		fprintf(NewTicket, "\n------------------------------");
@@ -490,6 +573,7 @@ void CrearVenta(char Nombres[21], char Apellidos[21])
 		double PrecioMarquesitas, PrecioIngredientes, PrecioEsquites, PrecioToppings, PrecioTostiesquites;
 		double PrecioRefrescos, PrecioAguas, TOTAL = 0;
 		
+		//SE VA CALCULANDO LOS PRECIOS DE CADA PRODUCTO EN SUS RESPECTIVAS FUNCIONES
 		for(int i = 1; i <= 7; i++)
 		{
 			switch(i)
@@ -566,11 +650,13 @@ void CrearVenta(char Nombres[21], char Apellidos[21])
 					break;
 			}
 		}
+		//SE INGRESA EL PRECIO TOTAL
 		sprintf(TOTALF, "$%.2lf", TOTAL);
 		fprintf(NewTicket, "\n%20s%10s", "TOTAL:", TOTALF);
 		fclose(NewTicket);
 	}else
 	{
+		//SI SE CAMCELÓ EL PEDIDO SE REGRESA AL MENÚ
 		system("cls");
 		printf("CANCELACIÓN CON ÉXITO");
 		printf("\nTeclea ENTER para regresar al MENÚ, por favor...");
@@ -578,7 +664,7 @@ void CrearVenta(char Nombres[21], char Apellidos[21])
 		getchar();
 	}
 }
-//---------------Vallidación de Marquesitas---------
+//----------------------Vallidación de Marquesitas-----------------
 int IngresarMarquesitas()
 {
 	int Num;
@@ -592,7 +678,7 @@ int IngresarMarquesitas()
 	}
 	return Num;
 }
-//---------------Vallidación de Ingredientes--------
+//---------------------Vallidación de Ingredientes-----------------
 int IngresarIngredientes()
 {
 	int Num;
@@ -606,7 +692,7 @@ int IngresarIngredientes()
 	}
 	return Num;
 }
-//---------------Vallidación de Esquites-------------
+//-----------------------Vallidación de Esquites-------------------
 int IngresarEsquites()
 {
 	int Num;
@@ -620,7 +706,7 @@ int IngresarEsquites()
 	}
 	return Num;
 }
-//---------------Vallidación de Tostiesquites-------
+//---------------------Vallidación de Tostiesquites----------------
 int IngresarTostiesquites()
 {
 	int Num;
@@ -634,7 +720,7 @@ int IngresarTostiesquites()
 	}
 	return Num;
 }
-//---------------Vallidación de Toppings-------------
+//------------------------Vallidación de Toppings------------------
 int IngresarToppings()
 {
 	int Num;
@@ -648,7 +734,7 @@ int IngresarToppings()
 	}
 	return Num;
 }
-//---------------Vallidación de Refrescos------------
+//-----------------------Vallidación de Refrescos------------------
 int IngresarRefrescos()
 {
 	int Num;
@@ -662,9 +748,10 @@ int IngresarRefrescos()
 	}
 	return Num;
 }
-//---------------Vallidación de Aguas----------------
+//-------------------------Vallidación de Aguas--------------------
 int IngresarAguas()
 {
+	
 	int Num;
 	printf("Ingrese cuántas Aguas son: ");
 	scanf("%d", &Num);
@@ -676,7 +763,13 @@ int IngresarAguas()
 	}
 	return Num;
 }
-//--------------Calcular Precio de Marquesitas--------
+/*
+A CONTINUACIÓN SE MUESTRAN 7 FUNCIONES QUE SIRVEN PARA QUE SE PUEDA CALCULAR EL PRECIO DE CADA PRODUCTO
+LO QUE HACEN ES LO MISMO ENTRE LAS 7 FUNCIONES, LO QUE CAMBIA ES QUE CADA PRECIO ESTÁ GUARDADO EN DIFERENTES .TXT´S,
+SE ABRE EL ARCHIVO, SE TOMA LA PRIMERA FILA, SE CAMBIA LO TOMADO CON VALOR A DOUBLE, LUEGO ESE PRECIO SE MULTIPLICA CON 
+LA CANTIDAD DE PRODUCTO SE PIDIÓ Y SE DEVUELVE ESE VALOR...
+*/
+//---------------------Calcular Precio de Marquesitas--------------
 double CalcularPrecioMarquesitas(int Cant)
 {
 	FILE *Costo;
@@ -698,7 +791,7 @@ double CalcularPrecioMarquesitas(int Cant)
 	fclose(Costo);
 	return Cant * CostoP;
 }
-//---------Calcular Precio de los Ingredientes--------
+//------------------Calcular Precio de los Ingredientes------------
 double CalcularPrecioIngredientes(int Cant)
 {
 	FILE *Costo;
@@ -720,7 +813,7 @@ double CalcularPrecioIngredientes(int Cant)
 	fclose(Costo);
 	return Cant * CostoP;
 }
-//--------------Calcular Precio de Esquites-----------
+//----------------------Calcular Precio de Esquites----------------
 double CalcularPrecioEsquites(int Cant)
 {
 	FILE *Costo;
@@ -742,7 +835,7 @@ double CalcularPrecioEsquites(int Cant)
 	fclose(Costo);
 	return Cant * CostoP;
 }
-//------------Calcular Precio de Tostiesquites--------
+//-------------------Calcular Precio de Tostiesquites--------------
 double CalcularPrecioTostiesquites(int Cant)
 {
 	FILE *Costo;
@@ -764,7 +857,7 @@ double CalcularPrecioTostiesquites(int Cant)
 	fclose(Costo);
 	return (Cant*CostoP);
 }
-//--------------Calcular Precio de Toppings-----------
+//----------------------Calcular Precio de Toppings----------------
 double CalcularPrecioToppings(int Cant)
 {
 	FILE *Costo;
@@ -786,7 +879,7 @@ double CalcularPrecioToppings(int Cant)
 	fclose(Costo);
 	return Cant * CostoP;
 }
-//--------------Calcular Precio de Refrescos-----------
+//---------------------Calcular Precio de Refrescos----------------
 double CalcularPrecioRefrescos(int Cant)
 {
 	FILE *Costo;
@@ -808,7 +901,7 @@ double CalcularPrecioRefrescos(int Cant)
 	fclose(Costo);
 	return Cant * CostoP;
 }
-//--------------Calcular Precio de Aguas---------------
+//-----------------------Calcular Precio de Aguas------------------
 double CalcularPrecioAguas(int Cant)
 {
 	FILE *Costo;
@@ -830,26 +923,30 @@ double CalcularPrecioAguas(int Cant)
 	fclose(Costo);
 	return Cant * CostoP;
 }
-//------------Función para ver Ticket------------------
+//-----------------------Función para ver Ticket-------------------
 void VerTicket()
 {
 	int num;
 	char Name[25];
 	char Name2[35] = "Tickets/";
 	
+	//SE LEE EL NÚMERO DEL TICKET QUE SE QUIERE VER
 	system("cls");
 	printf("Ingrese el número del ticket que desea ver, por favor: ");
 	scanf("%d", &num);
 	fflush(stdin);
 	
+	//SE CALCULA EL NOMBRE DEL ARCHIVO A BUSCAR
 	sprintf(Name, "%d", num);
 	strcat(Name, ".txt");
 	strcat(Name2, Name);
 	
+	//SE INTENTA ABRIR
 	FILE *Ticket;
 	Ticket = fopen(Name2, "r");
 	if(Ticket != NULL)
 	{
+		//SI SALE TODO BIEN, SE IMPRIME EL TICKET
 		system("cls");
 		printf("ENCONTRADO, TECLEAR ENTER PARA VER EL TICKET.\n");
 		fflush(stdin);
@@ -868,7 +965,7 @@ void VerTicket()
 		fflush(stdin);
 		getchar();
 	}else
-	{
+	{//SI SALE ERROR, SE INFORMA QUE NO SE ENCONTRÓ Y SE VUELVE AL MENÚ
 		system("cls");
 		printf("¡¡ERROR!!");
 		printf("\nEL ARCHIVO NO EXISTE...");
@@ -878,9 +975,10 @@ void VerTicket()
 	}
 	
 }
-//--------------Función para ver ganancias-----------------
+//----------------------Función para ver ganancias-----------------
 void VerGanancias()
 {
+	//SE IMPRIME EL MENÚ, Y DEPENDIENDO DE LA SELECCIÓN SE LLEVA A LA FUNCIÓN CORRESPONDIENTE
 	int Seleccion;
 	system("cls");
 	printf("¿CÓMO DESEA VER LAS GANANCIAS?");
@@ -906,6 +1004,7 @@ void VerGanancias()
 		case 4:
 			break;
 		default:
+			//SI SE SELECCIONA UNA OPCIÓN INVALIDA SE MANDA ERROR Y REALIZA UNA RECURSIÓN
 			printf("ERROR, SELECCIÓN INVALIDA...");
 			printf("\nIntente de nuevo, por favor.");
 			printf("\nTeclea ENTER para regresar a las opciones, por favor...");
@@ -915,9 +1014,10 @@ void VerGanancias()
 			break;
 	}
 }
-//--------------Ver Ganancias de un DÍA----------------
+//-----------------------Ver Ganancias de un DÍA-------------------
 void GananciasDia()
 {
+	//SE INICIALIZAN LAS VARIABLES QUE NOS SERVIRAN
 	int Dia, Mes, Anio;
 	char Aux[35], Fecha[30];
 	int NumTicket;
@@ -925,6 +1025,7 @@ void GananciasDia()
 	double Ganancia = 0;
 	bool Val = false;
 	
+	//SE LE PIDE AL USUARIO QUE INGRESE EL DÍA, MÉS, Y AÑO DE LA FECHA A BUSCAR LA GANANCIA
 	printf("Ingrese el día, por favor: ");
 	scanf("%d", &Dia);
 	fflush(stdin);
@@ -935,9 +1036,10 @@ void GananciasDia()
 	scanf("%d", &Anio);
 	fflush(stdin);
 	
+	//SE GUARDA EN EL ARRAY Fecha EL DÍA, MES Y AÑO PARA QUE NOS SIRVA LUEGO CON LA BUSQUEDA
 	sprintf(Fecha, "%d/%d/%d", Dia, Mes, Anio);
 	
-	
+	//ABRE EL ARCHIVO DE ULTIMOTICKET, PARA QUE SEPAMOS HASTA DONDE DEJAREMOS DE ABRIR ARCHIVOS
 	FILE *Ultimo;
 	Ultimo = fopen("Tickets/UltimoNoTicket.txt", "r");
 	if(Ultimo == NULL)
@@ -956,6 +1058,7 @@ void GananciasDia()
 	
 	NumTicket = atoi(Aux);
 	
+	//REALIZAMOS UN FOR PARA QUE SE VAYA ABRIENDO CADA TICKET, HASTA QUE LLEGUEMOS AL ULTIMO Y SEPAMOS LA GANANCIA DEL DÍA
 	for(int i = 1; i <= NumTicket; i++)
 	{
 		strcpy(Aux,"");
@@ -974,41 +1077,44 @@ void GananciasDia()
 			exit(-1);
 		}
 		
-		fgets(Aux, 35, Archivo);
-		fgets(Aux, 35, Archivo);
-		fgets(Aux, 35, Archivo);
-		fgets(Aux, 35, Archivo);
-		fgets(Aux, 35, Archivo);
+		fgets(Aux, 34, Archivo);
+		fgets(Aux, 34, Archivo);
+		fgets(Aux, 34, Archivo);
+		fgets(Aux, 34, Archivo);
+		fgets(Aux, 34, Archivo);
 		
 		token = strtok(Aux, " ");
 		token = strtok(NULL, "\n");
 		
 		if(strcmp(Fecha, token) == 0)
 		{
-			Val = true;
+			Val = true;//PARA LUEGO CONFIRMAR QUE ENCONTRAMOS AL MENOS UN TICKET DEL DÍA INGRESADO
 			
 			while(!feof(Archivo))
 			{
-				fgets(Aux, 35, Archivo);
+				fgets(Aux, 34, Archivo);
 			}
 			
 			token = strtok(Aux, "$");
 			token = strtok(NULL, "\n");
 			
-			Ganancia = Ganancia + atof(token);
+			Ganancia = Ganancia + atof(token);//SE VAN SUMANDO LAS GANANCIAS DE CADA TICKET
+			printf("\n%lf", Ganancia);
 		}
 		
-		fclose(Archivo);
+		fclose(Archivo);//SE CIERRA CADA TICKET
 	}
 	
-	system("cls");
+	system("cls");//SE LIMPIA LA CONSOLA
 	
 	if(Val == true)
 	{
+		//SI SE ENCONTRO AL MENOS UN TICKET DEL DÍA SE IMPRIME LAS GANANCIAS
 		printf("SE ENCONTRÓ LA GANANCIA DE LA FECHA: %s.", Fecha);
 		printf("\nLA GANANCIA ES: %.2lf.", Ganancia);
 	}else
 	{
+		//SI NO SE ENCONTRÓ NINGÚN TICKET RELACIONADO CON LO SOLICITADO SE INDICA QUE NO SE ENCONTRARON GANANCIAS DEL DÍA INGRESADO
 		printf("NO SE ENCONTRÓ LA GANANCIA DE LA FECHA: %s.", Fecha);
 	}
 	
@@ -1016,9 +1122,10 @@ void GananciasDia()
 	fflush(stdin);
 	getchar();
 }
-//--------------Ver Ganancias de una SEMANA------------
+//---------------------Ver Ganancias de una SEMANA-----------------
 void GananciasSemana()
 {
+	//SE INICIALIZAN LAS VARIABLES QUE NOS SERVIRAN
 	int Dia, Mes, Anio;
 	char Aux[35], FechaI[30], FechaF[30];
 	int NumTicket;
@@ -1026,6 +1133,7 @@ void GananciasSemana()
 	double Ganancia = 0;
 	bool Val = false;
 	
+	//SE IMPRIME LO QUE SE SOLICITA 
 	printf("INGRESE PRIMERO LA FECHA DEL INICIO DE LA SEMANA");
 	printf("\nAPARTIR DE LA FECHA QUE INGRESE EMPEZAREMOS A CONTAR");
 	printf("\nLOS 7 DÍAS DE LA SEMANA.");
@@ -1039,8 +1147,10 @@ void GananciasSemana()
 	scanf("%d", &Anio);
 	fflush(stdin);
 	
+	//SE GUARDA EN FechaI la fecha que se acaba de ingresar
 	sprintf(FechaI, "%d/%d/%d", Dia, Mes, Anio);
 	
+	//ABRE EL ARCHIVO DE ULTIMOTICKET, PARA QUE SEPAMOS HASTA DONDE DEJAREMOS DE ABRIR ARCHIVOS
 	FILE *Ultimo;
 	Ultimo = fopen("Tickets/UltimoNoTicket.txt", "r");
 	if(Ultimo == NULL)
@@ -1054,18 +1164,19 @@ void GananciasSemana()
 		exit(-1);
 	}
 	rewind(Ultimo);
-	fgets(Aux, 30, Ultimo);
+	fgets(Aux, 34, Ultimo);
 	fclose(Ultimo);
 	
 	
 	NumTicket = atoi(Aux);
 	
-	
+	//REALIZAMOS UN FOR PARA QUE SE VAYA ABRIENDO TODOS LOS TICKETS HASTA QUE SE CUMPLAN LOS 7 DÍAS A PARTIR DEL DÍA INICIAL
 	for(int t = 0; t < 7; t++)
 	{
 		
 		sprintf(FechaF, "%d/%d/%d", Dia, Mes, Anio);
 		
+		//REALIZAMOS UN FOR PARA QUE SE VAYA ABRIENDO CADA TICKET, HASTA QUE LLEGUEMOS AL ULTIMO Y SEPAMOS LA GANANCIA DEL DÍA
 		for(int i = 1; i <= NumTicket; i++)
 		{
 			strcpy(Aux,"");
@@ -1084,11 +1195,11 @@ void GananciasSemana()
 				exit(-1);
 			}
 			
-			fgets(Aux, 35, Archivo);
-			fgets(Aux, 35, Archivo);
-			fgets(Aux, 35, Archivo);
-			fgets(Aux, 35, Archivo);
-			fgets(Aux, 35, Archivo);
+			fgets(Aux, 34, Archivo);
+			fgets(Aux, 34, Archivo);
+			fgets(Aux, 34, Archivo);
+			fgets(Aux, 34, Archivo);
+			fgets(Aux, 34, Archivo);
 			
 			token = strtok(Aux, " ");
 			token = strtok(NULL, "\n");
@@ -1099,31 +1210,33 @@ void GananciasSemana()
 				
 				while(!feof(Archivo))
 				{
-					fgets(Aux, 35, Archivo);
+					fgets(Aux, 34, Archivo);
 				}
 				
 				token = strtok(Aux, "$");
 				token = strtok(NULL, "\n");
 				
-				Ganancia = Ganancia + atof(token);
+				Ganancia = Ganancia + atof(token);//SE VAN SUMANDO LAS GANANCIAS DE CADA TICKET
 			}
 			
-			fclose(Archivo);
+			fclose(Archivo);//SE CIERRA CADA ARCHIVO QUE SE ABRA
 		}
 		
-		CalcularFecha(&Dia, &Mes, &Anio);
+		CalcularFecha(&Dia, &Mes, &Anio);//SE LLAMA A LA FUNCIÓN PARA QUE SE CALCULE LA SIGUIENTE FECHA
 		
 	}
 	
 	
-	system("cls");
+	system("cls");//SE LIMPIA LA CONSOLA
 	
 	if(Val == true)
 	{
+		//SI SE ENCONTRO AL MENOS UN TICKET DEL DÍA SE IMPRIME LAS GANANCIAS
 		printf("SE ENCONTRÓ LA GANANCIA ENTRE LAS FECHAS: %s Y %s.", FechaI, FechaF);
 		printf("\nLA GANANCIA ES: %.2lf.", Ganancia);
 	}else
 	{
+		//SI NO SE ENCONTRÓ NINGÚN TICKET RELACIONADO CON LO SOLICITADO SE INDICA QUE NO SE ENCONTRARON GANANCIAS DEL DÍA INGRESADO
 		printf("NO SE ENCONTRARON GANANCIAS POR LA FECHA INDICADA, VERIFIQUE MEJOR, PORFAVOR...");
 	}
 	
@@ -1131,9 +1244,10 @@ void GananciasSemana()
 	fflush(stdin);
 	getchar();
 }
-//--------------Ver Ganancias de un MES----------------
+//-----------------------Ver Ganancias de un MES-------------------
 void GananciasMes()
 {
+	//SE INICIALIZAN LAS VARIABLES QUE NOS SERVIRAN
 	int Dia, Mes, Anio;
 	char Aux[35], FechaI[30], FechaF[30];
 	int NumTicket;
@@ -1141,6 +1255,7 @@ void GananciasMes()
 	double Ganancia = 0;
 	bool Val = false;
 	
+	//SE IMPRIME LO QUE SE SOLICITA 
 	printf("INGRESE PRIMERO LA FECHA DEL INICIO DE LA SEMANA");
 	printf("\nAPARTIR DE LA FECHA QUE INGRESE EMPEZAREMOS A CONTAR");
 	printf("\nLOS 28 DÍAS Ó 4 SEMANAS.");
@@ -1154,8 +1269,10 @@ void GananciasMes()
 	scanf("%d", &Anio);
 	fflush(stdin);
 	
+	//SE GUARDA EN FechaI la fecha que se acaba de ingresar
 	sprintf(FechaI, "%d/%d/%d", Dia, Mes, Anio);
 	
+	//ABRE EL ARCHIVO DE ULTIMOTICKET, PARA QUE SEPAMOS HASTA DONDE DEJAREMOS DE ABRIR ARCHIVOS
 	FILE *Ultimo;
 	Ultimo = fopen("Tickets/UltimoNoTicket.txt", "r");
 	if(Ultimo == NULL)
@@ -1169,18 +1286,19 @@ void GananciasMes()
 		exit(-1);
 	}
 	rewind(Ultimo);
-	fgets(Aux, 30, Ultimo);
+	fgets(Aux, 34, Ultimo);
 	fclose(Ultimo);
 	
 	
 	NumTicket = atoi(Aux);
 	
-	
+	//REALIZAMOS UN FOR PARA QUE SE VAYA ABRIENDO TODOS LOS TICKETS HASTA QUE SE CUMPLAN LOS 7 DÍAS A PARTIR DEL DÍA INICIAL
 	for(int t = 0; t < 28; t++)
 	{
 		
 		sprintf(FechaF, "%d/%d/%d", Dia, Mes, Anio);
 		
+		//REALIZAMOS UN FOR PARA QUE SE VAYA ABRIENDO CADA TICKET, HASTA QUE LLEGUEMOS AL ULTIMO Y SEPAMOS LA GANANCIA DEL DÍA
 		for(int i = 1; i <= NumTicket; i++)
 		{
 			strcpy(Aux,"");
@@ -1199,11 +1317,11 @@ void GananciasMes()
 				exit(-1);
 			}
 			
-			fgets(Aux, 35, Archivo);
-			fgets(Aux, 35, Archivo);
-			fgets(Aux, 35, Archivo);
-			fgets(Aux, 35, Archivo);
-			fgets(Aux, 35, Archivo);
+			fgets(Aux, 34, Archivo);
+			fgets(Aux, 34, Archivo);
+			fgets(Aux, 34, Archivo);
+			fgets(Aux, 34, Archivo);
+			fgets(Aux, 34, Archivo);
 			
 			token = strtok(Aux, " ");
 			token = strtok(NULL, "\n");
@@ -1214,31 +1332,33 @@ void GananciasMes()
 				
 				while(!feof(Archivo))
 				{
-					fgets(Aux, 35, Archivo);
+					fgets(Aux, 34, Archivo);
 				}
 				
 				token = strtok(Aux, "$");
 				token = strtok(NULL, "\n");
 				
-				Ganancia = Ganancia + atof(token);
+				Ganancia = Ganancia + atof(token);//SE VAN SUMANDO LAS GANANCIAS DE CADA TICKET
 			}
 			
-			fclose(Archivo);
+			fclose(Archivo);//SE CIERRA CADA ARCHIVO QUE SE ABRA
 		}
 		
-		CalcularFecha(&Dia, &Mes, &Anio);
+		CalcularFecha(&Dia, &Mes, &Anio);//SE LLAMA A LA FUNCIÓN PARA QUE SE CALCULE LA SIGUIENTE FECHA
 		
 	}
 	
 	
-	system("cls");
+	system("cls");//SE LIMPIA LA CONSOLA
 	
 	if(Val == true)
 	{
+		//SI SE ENCONTRO AL MENOS UN TICKET DEL DÍA SE IMPRIME LAS GANANCIAS
 		printf("SE ENCONTRÓ LA GANANCIA ENTRE LAS FECHAS: %s Y %s.", FechaI, FechaF);
 		printf("\nLA GANANCIA ES: %.2lf.", Ganancia);
 	}else
 	{
+		//SI NO SE ENCONTRÓ NINGÚN TICKET RELACIONADO CON LO SOLICITADO SE INDICA QUE NO SE ENCONTRARON GANANCIAS DEL DÍA INGRESADO
 		printf("NO SE ENCONTRARON GANANCIAS POR LA FECHA INDICADA, VERIFIQUE MEJOR, PORFAVOR...");
 	}
 	
@@ -1246,11 +1366,13 @@ void GananciasMes()
 	fflush(stdin);
 	getchar();
 }
-//-----------------Calcular Fecha---------------------------
+//----------------------------Calcular Fecha-----------------------
 int CalcularFecha(int *D, int *M, int *A)
 {
+	//SE VALIDA SI ES UN AÑO BISIESTO
 	if ( *A % 4 == 0 && *A % 100 != 0 || *A % 400 == 0 )
 	{
+		//SE VALIDA CUAL MES ES Y RESPECTO A ELLO SE SUMA EL DÍA, MES SI ES NECESARIO Y AÑO SI ES NECESARIO
 		switch(*M)
 		{
 			case 1:
@@ -1377,6 +1499,7 @@ int CalcularFecha(int *D, int *M, int *A)
 		}
 	}else
 	{
+		//SE VALIDA CUAL MES ES Y RESPECTO A ELLO SE SUMA EL DÍA, MES SI ES NECESARIO Y AÑO SI ES NECESARIO
 		switch(*M)
 		{
 			case 1:
@@ -1503,9 +1626,10 @@ int CalcularFecha(int *D, int *M, int *A)
 		}
 	}
 }
-//----------------Cambiar los Precios------------------------
+//-------------------------Cambiar los Precios---------------------
 void CambiarPrecios()
 {
+	//SE MANDA EL MENÚ 
 	int Seleccion;
 	system("cls");
 	printf("Elija de cuál producto quiere cambiar precios.");
@@ -1521,6 +1645,7 @@ void CambiarPrecios()
 	scanf("%d", &Seleccion);
 	fflush(stdin);
 	system("cls");
+	//RESPECTO AL PRECIO QUE SE QUIERA CAMBIAR SE MANDA A LA FUNCIÓN CORRESPONDIENTE
 	switch(Seleccion)
 	{
 		case 1:
@@ -1547,16 +1672,25 @@ void CambiarPrecios()
 		case 8:
 			break;
 		default:
+			//SI SE SELECCIONA UNA OPCIÓN QUE NO SEA VALIDA SE LANZA EL SIGUIENTE ERROR 
 			printf("ERROR, SELECCIÓN INVALIDA...");
 			printf("\nIntente de nuevo, por favor.");
 			printf("\nTeclea ENTER para continuar, por favor...");
 			fflush(stdin);
 			getchar();
-			CambiarPrecios();
+			CambiarPrecios();//SE REALIZA UN PROCESO RECURSIVO
 			break;
 	}
 }
-//-----------------Cambiar Precio Marquesitas-----------
+/*
+A CONTINUACIÓN SIGUIEN 7 FUNCIONES QUE SIRVEN PARA CAMBIAR PRECIOS DE CADA PRODUCTO, DEPENDIENDO DE LA FUNCIÓN,
+CADA FUNCIÓN HACE BASICAMENTE LO MISMO, PERO SOLO CAMBIA EL PRECIO A CAMBIAR, DEBIDO AL ARCHIVO QUE SE DEBE DE 
+ABRIR, HACEN TODOS ESTO: INICIALIZAR UNA VARIABLE DONDE INGRESAR EL VALOR DEL NUEVO PRECIO, SE LLAMA A UNA FUNCION QUE PIDE EL PRECIO Y SE VALIDA
+CON UN PROCESO RECURSIVO, LUEGO SE ABRE EL .TXT DEL PRECIO DEL PRODUCTO CORRESPONDIENTE A CAMBIAR, SI NO SE ABRE MANDA UN ERROR 
+Y SE CIERRA EL PROGRAMA, LUEGO SE REESCRIBE EL ARCHIVO Y SE INGRESA EL NUEVO PRECIO, SE CIERRA EL ARCHIVO Y
+VUELVE AL MENÚ.
+*/
+//----------------------Cambiar Precio Marquesitas-----------------
 void CambiarPrecioMarquesitas()
 {
 	double Num = ValidarPrecio();
@@ -1576,7 +1710,7 @@ void CambiarPrecioMarquesitas()
 	fprintf(Archivo, "%.2lf", Num);
 	fclose(Archivo);
 }
-//-----------------Cambiar Precio Ingredientes-----------
+//---------------------Cambiar Precio Ingredientes-----------------
 void CambiarPrecioIngredientes()
 {
 	double Num = ValidarPrecio();
@@ -1596,7 +1730,7 @@ void CambiarPrecioIngredientes()
 	fprintf(Archivo, "%.2lf", Num);
 	fclose(Archivo);
 }
-//-----------------Cambiar Precio Esquites---------------
+//-----------------------Cambiar Precio Esquites-------------------
 void CambiarPrecioEsquites()
 {
 	double Num = ValidarPrecio();
@@ -1616,7 +1750,7 @@ void CambiarPrecioEsquites()
 	fprintf(Archivo, "%.2lf", Num);
 	fclose(Archivo);
 }
-//-----------------Cambiar Precio TostiEsquites-----------
+//---------------------Cambiar Precio TostiEsquites----------------
 void CambiarPrecioTostiEsquites()
 {
 	double Num = ValidarPrecio();
@@ -1636,7 +1770,7 @@ void CambiarPrecioTostiEsquites()
 	fprintf(Archivo, "%.2lf", Num);
 	fclose(Archivo);
 }
-//-----------------Cambiar Precio Toppings----------------
+//------------------------Cambiar Precio Toppings------------------
 void CambiarPrecioToppings()
 {
 	double Num = ValidarPrecio();
@@ -1656,7 +1790,7 @@ void CambiarPrecioToppings()
 	fprintf(Archivo, "%.2lf", Num);
 	fclose(Archivo);
 }
-//-----------------Cambiar Precio Refrescos---------------
+//------------------------Cambiar Precio Refrescos-----------------
 void CambiarPrecioRefrescos()
 {
 	double Num = ValidarPrecio();
@@ -1676,7 +1810,7 @@ void CambiarPrecioRefrescos()
 	fprintf(Archivo, "%.2lf", Num);
 	fclose(Archivo);
 }
-//-----------------Cambiar Precio Aguas-------------------
+//--------------------------Cambiar Precio Aguas-------------------
 void CambiarPrecioAguas()
 {
 	double Num = ValidarPrecio();
@@ -1696,30 +1830,37 @@ void CambiarPrecioAguas()
 	fprintf(Archivo, "%.2lf", Num);
 	fclose(Archivo);
 }
-//------------------Validar Precio-------------------------
+//-----------------------------Validar Precio----------------------
 double ValidarPrecio()
 {
+	//SE INICIALIZA LA VARIABLE PARA INGRESAR UN PRECIO
 	double Num;
+	
+	//SE PIDE AL USUARIO QUE INGRESE EL VALOR
 	printf("Ingrese precio nuevo, por favor: ");
-	scanf("%lf", &Num);
+	scanf("%lf", &Num);//se lee el valor
+	fflush(stdin);
 	
 	if(Num < 0)
 	{
+		//si el valor ingresado es menor a 0, se manda un error
 		system("cls");
 		printf("ERROR, DEBE SER MAYOR IGUA O MAYOR QUE 0...");
 		printf("\nINTENTE DE NUEVO...");
 		printf("\nTeclea ENTER para continuar, por favor...");
 		fflush(stdin);
 		getchar();
-		Num = ValidarPrecio();
+		Num = ValidarPrecio();//se realiza una recursión llamando a la misma función, hasta que se ingrese un valor valido
 	}
-	return Num;
+	return Num;//se retorna el valor ya validado
 }
-//----------------Agregar Trabajador----------------------
+//---------------------------Agregar Trabajador--------------------
 void AgregarTrabajador()
 {
+	//se limpia la consola
 	system("cls");
 	
+	//SE INICIALIZAN LAS VARIABLES QUE NECESITAMOS
 	char Usuario[16];
 	char Contrasenia[16];
 	int Admin;
@@ -1731,12 +1872,14 @@ void AgregarTrabajador()
 	bool Val = false;
 	int S;
 	
+	//SE IMPRIME EL MENÚ
 	printf("%37s%-38s", "INGRESO DE ", "TRABAJADOR");
 	
 	printf("\nIngrese el nuevo Usuario (Solo se contarán los primeros 15 carácteres): \n");
-	fgets(Usuario, 16, stdin);
-	Cambio(Usuario, 16);
+	fgets(Usuario, 16, stdin);//SE LEE EL NUEVO USUARIO
+	Cambio(Usuario, 16);//SE LLAMA A LA FUNCIÓN Cambio PARA QUE SE CAMBIE EL SALTO DEL fgets
 	
+	//SE ABRE EL ARCHIVO DEL LOGIN
 	LOGIN = fopen("Datos/LOGIN.txt", "r");
 	if(LOGIN == NULL)
 	{
@@ -1749,10 +1892,13 @@ void AgregarTrabajador()
 		exit(-1);
 	}
 	
+	//SE PONE EL CURSO AL INICIO DEL ARCHIVO DE LOGIN
 	rewind(LOGIN);
 	
-	fgets(Aux, 80, LOGIN);
+	fgets(Aux, 80, LOGIN);//SE IGNORA LA PRIMERA LINEA DEL ARCHIVO
 	
+	//SE LEE CADA LINEA HASTA QUE SE ACABE EL ARCHIVO O SI SE LLEGA A ENCONTRAR UN USUARIO IGUAL AL QUE SE QUIERE INGRESAR
+	//ESTO ES PARA QUE NO EXISTAN USUARIOS IGUALES
 	while(!feof(LOGIN) && Val == false)
 	{
 		fgets(Aux, 80, LOGIN);
@@ -1764,12 +1910,13 @@ void AgregarTrabajador()
 			}	
 	    }
 	}
-	fclose(LOGIN);
+	fclose(LOGIN);//SE CIERRA EL ARCHIVO
 	
-	if(Val == true)
+	
+	if(Val == true)//SI SE ENCONTRÓ UN USUARIO IGUAL AL QUE SE QUISO INGRESAR SE LEEN LAS SIGUIENTES SENTENCIAS
 	{
 		do
-		{
+		{//SE EJECUTAN LAS SIGUIENTES SENTENCIAS HASTA QUE SE INGRESE UN VALOR VALIDO
 			system("cls");
 			printf("USUARIO YA EXISTE, ¿DESEA SEGUIR INTENTANDO?");
 			printf("\n1. SI.");
@@ -1785,13 +1932,14 @@ void AgregarTrabajador()
 			}
 		}while(S != 1 && S != 2);
 		
-		if(S == 1)
+		if(S == 1)//SI SE QUIERE SEGUIR INTENTANDO, SE REALIZA UNA RECURSIVIDAD LLAMANDO LA MISMA FUNCIÓN
 		{
 			fflush(stdin);
 			AgregarTrabajador();
 		}
-	}else
+	}else//SI NO SE ENCONTRÓ UN USUARIO IGUAL AL QUE SE QUISO INGRESAR SE LEEN LAS SIGUIENTES SENTENCIAS
 	{
+		//SE INGRESAN LOS OTROS DATOS DEL NUEVO USUARIO
 		printf("\nIngrese su contraseña (Solo se contarán los primeros 15 carácteres): ");
 		fgets(Contrasenia, 16, stdin);
 		Cambio(Contrasenia, 16);
@@ -1802,7 +1950,7 @@ void AgregarTrabajador()
 		fgets(Apellidos, 21, stdin);
 		Cambio(Apellidos, 21);
 		do
-		{
+		{//SE REALIZAN LAS SIGUIENTES SENTENCIAS DENTRO DEL DO-WHILE HASTA QUE SE INGRESE UNA OPCIÓN VALIDA
 			system("cls");
 			printf("¿El nuevo trabajador, va a ser administrador?");
 			printf("\n1. SI.");
@@ -1819,13 +1967,15 @@ void AgregarTrabajador()
 		}while(S != 1 && S != 2);
 		
 		if(S == 2)
-		{
+		{//SI S ES 2, O SEA QUE ES UN SIMPLE TRABAJADOR, SE ENTIENDE QUE EN EL ARCHIVO SE GUARDARÁ COMO VALOR 0
 			S = 0;
 		}
 		
+		//SE ABRE EL ARCHIVO LOGIN, PARA QUE SE AGREGUEN LOS NUEVOS DATOS
 		LOGIN = fopen("Datos/LOGIN.txt", "a");
 		if(LOGIN == NULL)
 		{
+			//SI SALE ALGO MAL SE CIERRA EL PROGRAMA
 			system("cls");
 			printf("¡¡ERROR!!");
 			printf("\nEL ARCHIVO NO EXISTE...");
@@ -1835,20 +1985,22 @@ void AgregarTrabajador()
 			exit(-1);
 		}
 		
+		//SE INGRESA LA NUEVA LINEA 
 		fprintf(LOGIN, "\n%s,%s,%d,%s,%s,", Usuario, Contrasenia, S, Nombres, Apellidos);
 		fclose(LOGIN);
 		system("cls");
 		printf("LISTO");
 		printf("\n\n\nTeclea ENTER para volver al MENÚ, por favor...");
 		fflush(stdin);
-		getchar();
+		getchar();//SE REGRESA AL MENÚ
 	}
 }
-//----------------Eliminar Trabajador----------------------
+//--------------------------Eliminar Trabajador--------------------
 void EliminarTrabajador()
 {
 	system("cls");
 	
+	//SE INICIALIZAN LAS VARIABLES QUE NOS SERVIRAN
 	char Usuario[16];
 	FILE *LOGIN;
 	FILE *NEWLOGIN;
@@ -1857,17 +2009,21 @@ void EliminarTrabajador()
 	bool Val = false;
 	int S;
 	
+	//SE IMPRIME LO QUE SE SOLICITA
 	printf("%37s%-38s", "ELIMINACIÓN D", "E TRABAJADOR");
 	
 	printf("\nIngrese el Usuario a eliminar (Solo se contarán los primeros 15 carácteres): \n");
-	fgets(Usuario, 16, stdin);
+	fgets(Usuario, 16, stdin);//SE LEE EL USUARIO QUE SE QUIERE ELIMINAR
 	Cambio(Usuario, 16);
 	
+	//SE ABRE EL ARCHIVO LOGIN
 	LOGIN = fopen("Datos/LOGIN.txt", "r");
+	//SE CREA UN NUEVO ARCHIVO PARA GUARDAR TODOS LOS DATOS DE TODOS LOS USUARIOS, EXCEPTO EL QUE SE QUIERE ELIMINAR
 	NEWLOGIN = fopen("Datos/LOGINTEMP.txt", "w");
 	
 	if(LOGIN == NULL || NEWLOGIN == NULL)
 	{
+		//SI SALE ALGO MAL SE IMPRIME LO QUE SIGUE
 		system("cls");
 		printf("¡¡ERROR!!");
 		printf("\nEL ARCHIVO NO EXISTE...");
@@ -1877,37 +2033,44 @@ void EliminarTrabajador()
 		exit(-1);
 	}
 	
+	//SE PONE EL CURSOR AL INICIO DEL ARCHIVO LOGIN
 	rewind(LOGIN);
 	
 	fgets(Aux, 80, LOGIN);
 	Cambio(Aux, 80);
-	fprintf(NEWLOGIN,Aux);
+	fprintf(NEWLOGIN,Aux);//SE VA ESCRIBIENDO LA PRIMERA LINEA DE LOGIN EN EL NUEVO ARCHIVO
 	
+	//SE VA LEYENDO CADA LINEA DEL LOGIN
 	while(!feof(LOGIN))
 	{
 		fgets(Aux, 80, LOGIN);
 		strcpy(Aux2, Aux);
-		token = strtok(Aux, ",");
+		token = strtok(Aux, ",");//SE VA TOMANDO EL PRIMER VALOR DE CADA LINEA QUE ES EL USUARIO
 	    if(token != NULL){
-	    	if(strcmp(Usuario, token) == 0)
+	    	if(strcmp(Usuario, token) == 0)//SE VALIDA QUE NO SEA IGUAL EL USUARIO QUE SE QUIERE ELIMINAR CON EL QUE ESTAMOS EN LA LINEA ACTUAL
 	    	{
-	    		Val = true;
+	    		Val = true;//SI SE ENCUENTRA EL QUE SE QUIERE ELIINAR SE IGNORA Y SE VALIDA
 			}else
 			{
+				//SI NO ES EL USUARIO A ELIMINAR SE ESCRIBE EN EL NUEVO ARCHIVO
 				Cambio(Aux2, 80);
 				fprintf(NEWLOGIN, "\n%s", Aux2);
 			}
 	    }
 	}
+	//SE CIERRAN LOS DOS ARCHIVOS PARA GUARDAR TODO
 	fclose(LOGIN);
 	fclose(NEWLOGIN);
 	
+	//SE ELIMINA EL ANTIGUO LOGIN
 	remove("Datos/LOGIN.txt");
 	
+	//SE CAMBIA EL NOMBRE DEL NUEVO ARCHIVO, Y SE GUARDAR COMO EL ANTIGUO ARCHIVO
 	rename("Datos/LOGINTEMP.txt", "Datos/LOGIN.txt");
 	
 	if(Val == true)
 	{
+		//SI SE ELIMINÓ CORRECTAMENTE EL USUARIO, SE IMPRIME LO SIGUIENTE Y SE VUELVE AL MENÚ
 		system("cls");
 		printf("LISTO");
 		printf("\n\n\nTeclea ENTER para volver al MENÚ, por favor...");
@@ -1916,9 +2079,9 @@ void EliminarTrabajador()
 		
 	}else
 	{
-		
+		//SI NO SE ELIMINÓ CORRECTAMENTE EL USUARIO, SE IMPRIME LO SIGUIENTE
 		do
-		{
+		{//SE EJECUTAN LAS SIGUIENTES SENTENCIAS HASTA QUE SE INGRESE UN VALOR VALIDO 
 			system("cls");
 			printf("USUARIO NO EXISTE, ¿DESEA SEGUIR INTENTANDO?");
 			printf("\n1. SI.");
@@ -1935,7 +2098,8 @@ void EliminarTrabajador()
 		}while(S != 1 && S != 2);
 		
 		if(S == 1)
-		{
+		{//SI SE QUIERE SEGUIR INTENTANDO A ELIMINAR UN USUARIO SE REALIZA UN PROCESO RECURSIVO LLAMANDO 
+		//A LA MISMA FUNCIÓN HASTA QUE YA SE ELIMINE UN USUAURIO O YA NO SE QUIERA SEGUIR INTENTANDO
 			fflush(stdin);
 			EliminarTrabajador();
 		}
