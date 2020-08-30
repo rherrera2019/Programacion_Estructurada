@@ -1,0 +1,26 @@
+                                          PROGRAMACIÓN ESTRUCTURADA
+POR: 
+- Víctor Cauich Davalos 
+- Alan Josue Barón Pat 
+
+Al ejectuar el programa le deberá salir un LOGIN, esto para validar a cada usuario. Los trabajadores guardados son: 
+
+      USUARIOS       |     CONTRASEÑAS    | ¿ES ADMINISTRADOR?    |     NOMBRE(S)     |    APELLIDO(S)    |
+    VictorEnrique    |      17042000      |          1            |  Victor Enrique   |   Cauich Davalos  |
+     EmilioRejon     |     12345678910    |          1            |       Emilio      |       Rejón       |
+      JuanPerez      |        123456      |          0            |        Juan       |      Perez Uc     |
+     Rossmarth28     |       28081999     |          0            |  Rossmarth Celina |  Mercedes Marrero |
+       Celina        |       Comili17     |          1            |       Celina      |  Mercedes Canché  |
+
+Alguna de estos usuarios con sus respectivas contraseñas debe usar, sino no le dejará entrar, ya luego, dependiendo
+de que si el usuario con el que accedió es administrador o un simple trabajador le desplegará un menú, la cual no 
+es igual para un administrador que para un trabajador, y ya luego dependiendo del menú puede ya probar el programa.
+
+<<CABE RECALCAR QUE LA INFORMACIÓN DE USUARIOS EN ESTE .TXT PUEDEN CAMBIAR POR EL PROGRAMA EN SI, YA QUE EL PROGRAMA
+PERMITE AGREGAR Y ELIMINAR USUARIOS Y SI SE REALIZAN CAMBIOS EN EL PROGRAMA, AQUÍ NO SE VERÁ REFLEJADO, PARA QUE VEA
+LOS USUARIOS ACTUALES, PUEDE ENTRAR A LA CARPETA "Datos", Y ACCEDER AL .txt LOGIN, AHÍ ESTARÁN LOS DATOS DE LOS 
+USUARIOS ACTUALIZADOS>>
+
+Por otro lado, en el pdf que se llama "Avances_Netcode.pdf" ese es el reporte que se solicitó.
+
+Que tenga buen día...
